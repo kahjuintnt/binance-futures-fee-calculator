@@ -16,8 +16,8 @@ const binance = new Binance().options({
 });
 
 
-async function getDepth(){
-	var x  = await binance.futuresDepth( "XMRUSDT" );
+async function getDepth(symbol){
+	var x  = await binance.futuresDepth( symbol );
 	return x;
 }
 
@@ -79,9 +79,9 @@ function convertUsdtToCrypto(amountUsdt, cryptoPrice){
 	return amountUsdt / cryptoPrice;
 }
 
-async function calcFuturesActualFeePercent(mode, side, oriBalanceUsdt){
+async function calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt){
 	if (mode == 'instant'){
-		var orderBook = await getDepth().then(function(val){
+		var orderBook = await getDepth(symbol).then(function(val){
 		return val;
 	    });
 		console.log('order book: ', orderBook);
@@ -105,4 +105,5 @@ async function calcFuturesActualFeePercent(mode, side, oriBalanceUsdt){
 	
 }
 
-calcFuturesActualFeePercent('instant', 'sell', 1000);
+calcFuturesActualFeePercent('instant', 'sell', 'XMRUSDT', 1000);
+//calcFuturesActualFeePercent('instant', 'buy', 'XMRUSDT', 1000);

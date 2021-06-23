@@ -79,29 +79,30 @@ function convertUsdtToCrypto(amountUsdt, cryptoPrice){
 	return amountUsdt / cryptoPrice;
 }
 
-async function main(){
-	var orderBook = await getDepth().then(function(val){
+async function calcFuturesActualFeePercent(mode, side, oriBalanceUsdt){
+	if (mode == 'instant'){
+		var orderBook = await getDepth().then(function(val){
 		return val;
-	});
-
-	console.log('order book: ', orderBook);
+	    });
+		console.log('order book: ', orderBook);
+	}
 	
 	var midPrice = (parseFloat(orderBook['bids'][0][0]) + parseFloat(orderBook['asks'][0][0]))/2;
 	console.log('midPrice: ', midPrice);
 	
-	var oriBalanceUsdt = 3000;
-	var cryptoBalance = buyCryptoFromUsdt(orderBook, oriBalanceUsdt);
-	finalBalUsdt = convertCryptoToUsdt(cryptoBalance, midPrice);
-	console.log('cryptoBalance: ', cryptoBalance);
+	if (side == 'buy'){
+		var cryptoBalance = buyCryptoFromUsdt(orderBook, oriBalanceUsdt);
+		finalBalUsdt = convertCryptoToUsdt(cryptoBalance, midPrice);
+		console.log('cryptoBalance: ', cryptoBalance);
+	}else if(side == 'sell'){
+		var cryptoBalance = convertUsdtToCrypto(oriBalanceUsdt, midPrice);
+		var finalBalUsdt = sellCryptoFromUsdt(orderBook, cryptoBalance);
+		console.log('finalBalUsdt: ', finalBalUsdt);
+	}
 	
 	var percentLoss = (finalBalUsdt - oriBalanceUsdt)*100/finalBalUsdt;
 	console.log('percentLoss: ', percentLoss);
 	
-	var usdtBalance = sellCryptoFromUsdt(orderBook, 40);
-	console.log('usdtBalance: ', usdtBalance);
 }
 
-//[usdtBalance, cryptoBalance] = acceptSellCryptoOffer(0, 10, 251.1, 5, 0.04);
-//console.log(usdtBalance, cryptoBalance);
-
-main();
+calcFuturesActualFeePercent('instant', 'sell', 1000);

@@ -100,7 +100,7 @@ function convertUsdtToCrypto(amountUsdt, cryptoPrice){
 	return amountUsdt / cryptoPrice;
 }
 
-async function calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt){
+async function calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt, feesPercent = 0.04){
 	if (mode == 'instant'){
 		//not implemented
 	}
@@ -119,13 +119,13 @@ async function calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt){
 	if(side == 'long'){
 		var user = new User(avaliableUSDT = oriBalanceUsdt, posSize = 0);
 		while(user.avaliableUSDT > 0){
-			orderBook.acceptTopOffer(side = 'long', userObj = user, feesPercent = 0.04);
+			orderBook.acceptTopOffer(side = 'long', userObj = user, feesPercent = feesPercent);
 		}
 	}else if(side == 'short'){
 		var oriBalanceCrypto = convertUsdtToCrypto(oriBalanceUsdt, midPrice);
 		var user = new User(avaliableUSDT = 0, posSize = oriBalanceCrypto);
 		while(user.posSize > 0){
-			orderBook.acceptTopOffer(side = 'short', userObj = user, feesPercent = 0.04);
+			orderBook.acceptTopOffer(side = 'short', userObj = user, feesPercent = feesPercent);
 		}
 	}
 	
@@ -145,5 +145,6 @@ async function calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt){
 	
 }
 
-calcFuturesActualFeePercent('instant', 'long', 'XMRUSDT', 30000);
-//calcFuturesActualFeePercent('instant', 'short', 'LTCUSDT', 30000);
+
+calcFuturesActualFeePercent('instant', 'long', 'XMRUSDT', 30000, 0.04);
+//calcFuturesActualFeePercent('instant', 'short', 'LTCUSDT', 30000, 0.04);

@@ -1,0 +1,7 @@
+https://www.smashingmagazine.com/2019/02/angular-application-bootstrap/
+"node_modules/bootstrap/dist/css/bootstrap.min.css"
+"node_modules/jquery/dist/jquery.min.js",
+"node_modules/bootstrap/dist/js/bootstrap.min.js"
+
+npm install --save bootstrap@4.6 jquery@3.5.1
+npm install --save bootstrap-select@1.13.14

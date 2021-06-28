@@ -1,0 +1,45 @@
+<body>
+
+<div style="margin-top: 40px;">
+  <h2><div class="numberCircle">1</div>&nbsp;Choose your crypto pairs</h2>
+  <select class="selectpicker show-tick" data-size="5" data-live-search="true" [(ngModel)]="calculator.symbol">
+    <option *ngFor="let symbol of symbol_a.symbols" [value]="symbol">
+        {{symbol}}
+    </option>
+  </select>
+</div>
+
+
+<div style="margin-top: 40px;">
+  <h2><div class="numberCircle">2</div>&nbsp;Choose long or short</h2>
+  <mat-button-toggle-group [(ngModel)]="calculator.side" aria-label="Font Style">
+    <mat-button-toggle value="long">Long</mat-button-toggle>
+    <mat-button-toggle value="short">Short</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div style="margin-top: 40px;">
+  <h2><div class="numberCircle">3</div>&nbsp;Enter Order Amount (in USDT)</h2>
+  <div class="form-group">
+    <h5>Enter an amount below</h5>
+    <input [(ngModel)]="calculator.oriBalanceUsdt" type="number" cs-currency-input ng-model="MainCtrl.amount" allow-negatives="true" class="input-s form-control money" placeholder="$" />
+
+    <mat-slider
+      thumbLabel
+      [(ngModel)]="calculator.oriBalanceUsdt"
+      [displayWith]="formatLabel"
+      tickInterval="100"
+      step="100"
+      min="0"
+      max="10000"
+      aria-label="units"></mat-slider>
+  </div>
+</div>
+
+<div style="margin-top: 40px;">
+  <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="getPercentLoss()">Calculate!</button>
+  <h1>Fee incurred from trading fee and spread: {{percentLoss.percentLoss}}%</h1>
+  
+</div>
+
+</body>

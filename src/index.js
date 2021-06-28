@@ -198,7 +198,11 @@ app.get('/api/calcFuturesActualFeePercent', async (req, res) => {
 	let side = req.query.side;
 	let symbol = req.query.symbol;
 	let oriBalanceUsdt = req.query.oriBalanceUsdt;
-	let feesPercent = req.query.feesPercent;
+	if (req.query.feesPercent == 'undefined'){ // optional query
+		var feesPercent = 0.04;
+	}else{
+		var feesPercent = req.query.feesPercent;
+	}
 	let returnMsg = await calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt, feesPercent).then(function(val){
 		return val;
 	});

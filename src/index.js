@@ -1,12 +1,44 @@
-// the hello world program
 /*
-libaries used:
+libaries for api used:
+npm install body-parser cors express helmet morgan
+
+other libaries used:
 node-binance-api
 https://www.npmjs.com/package/node-binance-api
 npm install -s node-binance-api
-
 */
 
+// ./src/index.js
+
+// importing the dependencies
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+
+// defining the Express app
+const app = express();
+
+
+// defining an array to work as the database (temporary solution)
+const ads = [
+  {title: 'Hello, world (again)!'}
+];
+
+// adding Helmet to enhance your API's security
+app.use(helmet());
+
+// using bodyParser to parse JSON bodies into JS objects
+app.use(bodyParser.json());
+
+// enabling CORS for all requests
+app.use(cors());
+
+// adding morgan to log HTTP requests
+app.use(morgan('combined'));
+
+//------------------------------------------------------------------------------
 
 const Binance = require('node-binance-api');
 const binance = new Binance().options({
@@ -14,10 +46,12 @@ const binance = new Binance().options({
   APISECRET: '<secret>'
 });
 
+function convertCryptoToUsdt(amountCrypto, cryptoPrice){
+	return amountCrypto * cryptoPrice;
+}
 
-async function getDepth(symbol){
-	var x  = await binance.futuresDepth( symbol );
-	return x;
+function convertUsdtToCrypto(amountUsdt, cryptoPrice){
+	return amountUsdt / cryptoPrice;
 }
 
 class OrderBook {
@@ -71,7 +105,6 @@ class OrderBook {
 		}
 	}
 	
-	
 	calculateMidPrice(){
 		var lowestSellingOffer = this.bookObj['asks'][0];
 		var lowestSellingOfferPrice = parseFloat(lowestSellingOffer[0]);
@@ -88,16 +121,6 @@ class User {
 		this.posSize = posSize;
 		this.unrealizedPnlUSDT = 0;
 	}
-}
-
-
-
-function convertCryptoToUsdt(amountCrypto, cryptoPrice){
-	return amountCrypto * cryptoPrice;
-}
-
-function convertUsdtToCrypto(amountUsdt, cryptoPrice){
-	return amountUsdt / cryptoPrice;
 }
 
 async function calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt, feesPercent = 0.04){
@@ -143,8 +166,46 @@ async function calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt, f
 	console.log('theoreticalFinalUSDT: ', theoreticalFinalUSDT);
 	console.log('percentLoss: ', percentLoss);
 	
+	return percentLoss;
 }
 
+async function getSymbols(){
+	let exhInfo = await binance.futuresExchangeInfo().then(function(val){
+		return val;
+	});
+	//console.info(exhInfo);
+	symbol_a = [];
+	for(i = 0; i < exhInfo.symbols.length; i++){
+		symbol_a.push(exhInfo.symbols[i].symbol);
+	}
+	return symbol_a;
+}
 
-calcFuturesActualFeePercent('instant', 'long', 'XMRUSDT', 30000, 0.04);
-//calcFuturesActualFeePercent('instant', 'short', 'LTCUSDT', 30000, 0.04);
+// defining an endpoint to return all ads
+app.get('/', (req, res) => {
+  res.send(ads);
+});
+
+app.get('/api/getSymbols', async (req, res) => {
+  let returnMsg = await getSymbols().then(function(val){
+		return val;
+	});
+  res.send({symbols: returnMsg});
+});
+
+app.get('/api/calcFuturesActualFeePercent', async (req, res) => {
+	let mode = req.query.mode;
+	let side = req.query.side;
+	let symbol = req.query.symbol;
+	let oriBalanceUsdt = req.query.oriBalanceUsdt;
+	let feesPercent = req.query.feesPercent;
+	let returnMsg = await calcFuturesActualFeePercent(mode, side, symbol, oriBalanceUsdt, feesPercent).then(function(val){
+		return val;
+	});
+  res.send({percentLoss: returnMsg});
+});
+
+// starting the server
+app.listen(3001, () => {
+  console.log('listening on port 3001');
+});

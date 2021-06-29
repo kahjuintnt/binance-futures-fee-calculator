@@ -42,7 +42,7 @@ For example: You bought $100,000 worth of XMR which pushes the mid price of XMR 
   
 This calculator also assumed that trading fees are charged by Binance right after you completed the trade. Hence, the trading fee does not lower the amount of crypto you can buy or sell. Instead, you will have negative unrealised profit right after the trade completed.
 
-## Note
+## Notes
 <ul>
   <li>I'm not entirely sure if the implementation is completely correct, any feedback and criticism is welcomed.</li>
   <li>Shamelessly copied alot of codes from w3school, stackoverflow and fiddle js.</li>

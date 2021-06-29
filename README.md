@@ -20,13 +20,19 @@ When a user sell 10XMR via market order, he/she is accepting best offers on the 
 Hence, he/she ends up selling 1XMR at $214.33, 0.04XMR at $214.18 and 8.96XMR at $214.27.
 
 According to the mid price, he/she has this much worth of XMR
+<pre>
 214.34 x 10 = $2143.40
+</pre>
 
 But after selling the XMR, he/she gets
+<pre>
 (214.33 x 1) + (214.32 x 0.04) + (214.18 x 8.96) = $2141.96
+</pre>
 
 Percentage amount lost due to spread is:
+<pre>
 (2141.96 - 2143.40) x 100 / 2143.40 = -0.06718298031%
+</pre>
 
 ## Reference
 https://academy.binance.com/en/articles/bid-ask-spread-and-slippage-explained

@@ -2,7 +2,7 @@
 A simple trading fee calculator for Binance futures market order that finds out how much fee you'll actually pay depending on the size of your order in USDT and current state of order book.
 
 ## How to use
-'''
+```
 Step 1:
 install node js (LTS) https://nodejs.org/en/
 
@@ -26,7 +26,7 @@ node src
 Step 5:
 cd to web calculator folder
 ng serve --open
-'''
+```
 
 ## Problem statement
 When a user executes a market order, a user pays trading fee. Besides that, there is also a hidden fee called spread.

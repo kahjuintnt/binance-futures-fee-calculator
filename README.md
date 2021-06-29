@@ -49,6 +49,7 @@ I'm not entirely sure if the implementation is completely correct, any feedback 
 ## To do's
 <ul>
   <li>Market depth can be displayed as a chart.</li>
+  <li>Make an animation of how the spread and fee percentage is calculated.</li>
 </ul>
 
 

@@ -13,5 +13,6 @@ Buy offer -  214.33   1.00
 Buy offer -  214.32   0.04  
 Buy offer -  214.27   9.50  
 
+z
 ## Reference
 https://academy.binance.com/en/articles/bid-ask-spread-and-slippage-explained

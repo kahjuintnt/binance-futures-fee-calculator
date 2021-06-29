@@ -30,8 +30,10 @@ interface PercentLoss {
 
 export class CalculatorComponent implements OnInit {
 
+  public myMath = Math;
+
   symbol_a: Symbols = {
-    symbols: ["BTCUSDT","ETHUSDT","BNBUSDT"]
+    symbols: ["BTCUSDT","ETHUSDT","XMRUSDT"]
   };
   
   
@@ -47,11 +49,16 @@ export class CalculatorComponent implements OnInit {
     percentLoss: 0
   };
 
+
   get_symbol_url: string = 'http://localhost:3001/api/getSymbols';
   get_percent_loss_url: string = 'http://localhost:3001/api/calcFuturesActualFeePercent';
 
   constructor(private http: HttpClient) {
 
+  }
+
+   delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms));
   }
 
   getSymbol_a() {
@@ -76,10 +83,24 @@ export class CalculatorComponent implements OnInit {
     return '$' + Math.round(value / 100)/10 + 'k';
   }
 
-  ngOnInit(): void {
+  //$('.selectpicker').selectpicker('refresh');
+
+  async ngOnInit(): Promise<void> {
     this.getSymbol_a();
+    let currentSymbol = this.symbol_a;
+    for(let i = 0; i<100; i++){
+      if(currentSymbol != this.symbol_a){
+        $('.selectpicker').selectpicker('refresh');
+        break;
+      }
+      await this.delay(100);
+    }
   }
 
+  //ngAfterViewInit() {
+  //  $('.selectpicker').find('[value=ETHUSDT]').remove();
+  //  $('.selectpicker').selectpicker('refresh');
+  //}
   
 
 }

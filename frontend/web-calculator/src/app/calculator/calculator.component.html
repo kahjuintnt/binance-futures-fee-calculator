@@ -2,7 +2,7 @@
 
 <div style="margin-top: 40px;">
   <h2><div class="numberCircle">1</div>&nbsp;Choose your crypto pairs</h2>
-  <select class="selectpicker show-tick" data-size="5" data-live-search="true" [(ngModel)]="calculator.symbol">
+  <select class="selectpicker show-tick" data-size="5" data-live-search="true" [(ngModel)]="calculator.symbol" ng-controller="symbolMenu">
     <option *ngFor="let symbol of symbol_a.symbols" [value]="symbol">
         {{symbol}}
     </option>
@@ -21,7 +21,6 @@
 <div style="margin-top: 40px;">
   <h2><div class="numberCircle">3</div>&nbsp;Enter Order Amount (in USDT)</h2>
   <div class="form-group">
-    <h5>Enter an amount below</h5>
     <input [(ngModel)]="calculator.oriBalanceUsdt" type="number" cs-currency-input ng-model="MainCtrl.amount" allow-negatives="true" class="input-s form-control money" placeholder="$" />
 
     <mat-slider
@@ -38,8 +37,11 @@
 
 <div style="margin-top: 40px;">
   <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="getPercentLoss()">Calculate!</button>
-  <h1>Fee incurred from trading fee and spread: {{percentLoss.percentLoss}}%</h1>
-  
 </div>
 
+<div style="margin-top: 40px;">
+  <div class="separator">Trading fee + spread</div>
+  <br>
+  <h2 style="text-align: center;">{{myMath.abs(percentLoss.percentLoss)}}%</h2>
+</div>
 </body>

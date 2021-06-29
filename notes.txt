@@ -3,5 +3,10 @@ https://www.smashingmagazine.com/2019/02/angular-application-bootstrap/
 "node_modules/jquery/dist/jquery.min.js",
 "node_modules/bootstrap/dist/js/bootstrap.min.js"
 
-npm install --save bootstrap@4.6 jquery@3.5.1
+npm install --save bootstrap@4.6 
+jquery@3.5.1
+// First install jQuery
+npm install --save jquery@3.5.1
+// and jQuery Definition
+npm install -D @types/jquery@3.5.1
 npm install --save bootstrap-select@1.13.14

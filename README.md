@@ -70,7 +70,7 @@ This calculator also assumed that trading fees are charged by Binance right afte
 
 ## Notes
 <ul>
-  <li>I'm not entirely sure if the implementation is completely correct, any feedback and criticism is welcomed.</li>
+  <li>I'm not entirely sure if the implementation is correct, any feedback and criticism is welcomed.</li>
   <li>Shamelessly copied alot of codes from w3school, stackoverflow and fiddle js.</li>
 </ul>
 

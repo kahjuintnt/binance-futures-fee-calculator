@@ -24,11 +24,15 @@ restart computer
 
 Step 5:
 cd to backend folder
+rm -rf node_modules
+npm install
 node src
 
 Step 6:
 export NODE_OPTIONS=--openssl-legacy-provider
 cd to frontend/web-calculator folder
+rm -rf node_modules
+npm install
 ng serve --open
 ```
 

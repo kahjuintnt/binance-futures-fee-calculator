@@ -20,11 +20,15 @@ npm install -s node-binance-api
 npm install body-parser cors express helmet morgan
 
 Step 4:
+restart computer
+
+Step 5:
 cd to backend folder
 node src
 
-Step 5:
-cd to web calculator folder
+Step 6:
+export NODE_OPTIONS=--openssl-legacy-provider
+cd to frontend/web-calculator folder
 ng serve --open
 ```
 
